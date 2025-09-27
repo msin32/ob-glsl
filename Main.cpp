@@ -101,7 +101,11 @@ int emacs_module_init (emacs_runtime *ert) noexcept {
     try {
         init();
         glbinding::Binding::initialize(
-            [](const char* name){ return SDL_GL_GetProcAddress(name); }, false);
+            glbinding::GetProcAddress{
+                [](const char* name){
+                    return reinterpret_cast<void(*)()>(SDL_GL_GetProcAddress(name));
+                }
+            }, false);
     } catch (std::exception& e) {
         reportError(env, e);
     }
