@@ -100,7 +100,8 @@ int emacs_module_init (emacs_runtime *ert) noexcept {
     emacs_env* env = ert->get_environment (ert);
     try {
         init();
-        glbinding::Binding::initialize(SDL_GL_GetProcAddress, false);
+        glbinding::Binding::initialize(
+            [](const char* name){ return SDL_GL_GetProcAddress(name); }, false);
     } catch (std::exception& e) {
         reportError(env, e);
     }
