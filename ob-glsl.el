@@ -15,10 +15,6 @@
 	 (concat default-directory
 			 (car (directory-files default-directory nil "^ob-glsl-module\\.\\(so\\|dll\\|dylib\\)$"))))
 	))
-(when (not (featurep 'ob-glsl-module))
-  (ob-glsl-compile))
-
-(require 'ob-glsl-module)
 
 (defvar org-babel-default-header-args:glsl
   '((:results . "file") (:exports . "results"))
